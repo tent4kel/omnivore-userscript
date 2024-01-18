@@ -13,23 +13,24 @@
 
     let leftZone, rightZone;
 
+// Function to calculate dynamic viewport height (dvh)
+function calculateDvh() {
+    const estimatedSafariGuiHeight = 60; // Adjust this based on your observation
+    return window.innerHeight - estimatedSafariGuiHeight;
+}
+
 // Function to scroll the viewport
 function scrollViewport(direction) {
-    const height = window.innerHeight;
-    const scrollPosition = window.pageYOffset;
-    const totalPageHeight = document.body.scrollHeight;
+    const dvh = calculateDvh();
+    const additionalOffset = 70; // Additional offset
 
-    // Check if at the bottom of the page
-    if (direction === 'forward' && scrollPosition + height >= totalPageHeight) {
-        // Trigger back action
-        window.history.back();
-    } else {
-        // Normal scroll behavior
-        window.scrollBy({
-            top: direction === 'forward' ? height : -height,
-            behavior: 'smooth'
-        });
-    }
+    // Calculate the scroll distance
+    const scrollDistance = dvh - additionalOffset;
+
+    window.scrollBy({
+        top: direction === 'forward' ? scrollDistance : -scrollDistance,
+        behavior: 'smooth'
+    });
 }
 
 
